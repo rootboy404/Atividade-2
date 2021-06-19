@@ -10,6 +10,7 @@ import com.example.crudfirabaseatividade2.R
 import com.example.crudfirabaseatividade2.model.Product
 
 class ItemProductAdapter (val productList: List<Product>): Adapter<ItemProductAdapter.ItemProductViewHolder>() {
+    var onClickItem:OnClickItem?=null;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemProductViewHolder {
         val inflate = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
@@ -27,7 +28,15 @@ class ItemProductAdapter (val productList: List<Product>): Adapter<ItemProductAd
         fun bind(product: Product){
             itemView.findViewById<TextView>(R.id.productName).text = product.name
             itemView.findViewById<TextView>(R.id.idPrice).text=product.price.toString()
+            itemView.setOnClickListener{
+                onClickItem?.edit(itemView,product)
+            }
         }
+    }
+
+
+    interface OnClickItem{
+        fun edit(view: View,product: Product)
     }
 
 }
